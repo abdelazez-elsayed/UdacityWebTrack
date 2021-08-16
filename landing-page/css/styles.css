@@ -18,10 +18,6 @@ body {
     color: #fff;
 }
 
-html {
-    scroll-behavior: smooth;
-  }
-
 /* Typeography General*/
 header{
     transition: top 0.3s;

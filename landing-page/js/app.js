@@ -44,7 +44,7 @@ class Section  {
     }
 }
 
-var sections =  document.querySelectorAll("section");
+let sections =  document.querySelectorAll("section");
 const nav_list = document.getElementById("navbar__list");
 let header = document.querySelector("header");
 /**
@@ -182,7 +182,7 @@ const section_objs = constructSections(sections);
 
 // Add class 'active' to section when near top of viewport
 setSectionActive(section_objs);
-
+document.getElementsByTagName("html")[0].style.scrollBehavior = 'smooth';
 // Scroll to anchor ID using scrollTO event
 
 
