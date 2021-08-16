@@ -3,11 +3,21 @@
 ## Table of Contents
 
 * [Instructions](#instructions)
-
+* [Dependencies](#Dependencies)
+* [files](#files)
+* [References](#References)
 ## Instructions
 
-The starter project has some HTML and CSS styling to display a static version of the Landing Page project. You'll need to convert this project from a static project to an interactive one. This will require modifying the HTML and CSS files, but primarily the JavaScript file.
 
-To get started, open `js/app.js` and start building out the app's functionality
+The repo contains HTML (index.html) and JavaScript (app.js) manibulating and building navigation bar dynamically
+just download it and run index.html in your browser.
+`git clone https://github.com/zezomido78/UdacityWebTrack/tree/main/landing-page`
 
-For specific, detailed instructions, look at the project instructions in the Udacity Classroom.
+## Dependencies
+
+No dependency required it's pure JavaScript code with no third party library
+## files
+`index.html` HTML file for page
+`js/app.js` JavaScript code to mainpulate content
+`css/style.css` CSS file to style the page 
+## Reference
