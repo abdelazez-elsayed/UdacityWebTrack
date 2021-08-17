@@ -1,5 +1,5 @@
 # Landing Page Project
-
+A simple page with smoothing scrolling to sections by clicking on them , showing which section is active (in the view)
 ## Table of Contents
 
 * [Instructions](#instructions)

@@ -79,7 +79,8 @@ function scrollTo(evt){
     const target_name=  evt.target.textContent;
     for(const sec of section_objs){
         if(sec.getName()==target_name)
-             sec.getSectionElem().scrollIntoView();
+             sec.getSectionElem().scrollIntoView({behavior: 'smooth'
+            });
     }
  }
 
@@ -136,7 +137,7 @@ function getActiveSection(section_objs){
 function isElementInViewport (el) {
 
   
-    var rect     = el.getBoundingClientRect(),
+    let rect     = el.getBoundingClientRect(),
     vWidth   = window.innerWidth || document.documentElement.clientWidth,
     vHeight  = window.innerHeight || document.documentElement.clientHeight,
     efp      = function (x, y) { return document.elementFromPoint(x, y) };     
@@ -182,7 +183,6 @@ const section_objs = constructSections(sections);
 
 // Add class 'active' to section when near top of viewport
 setSectionActive(section_objs);
-document.getElementsByTagName("html")[0].style.scrollBehavior = 'smooth';
 // Scroll to anchor ID using scrollTO event
 
 
