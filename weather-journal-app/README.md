@@ -3,10 +3,10 @@
 ## Overview
 A simple web page uses WEB API to fetch data from OpenWeatherMap sends your input to local server and respond to you
 ## Dependencies 
-Bootstrap 5 
-Express 
-Body-parser
-Cors
+Bootstrap 5\
+Express\
+Body-parser\
+Cors\
 ## Instructions
 Make sure you install NodeJS , express , body-parser and cors\
 if not install them -> open terminal and run these commands (make sure you install NodeJS and NPM first)\
