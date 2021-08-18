@@ -8,10 +8,14 @@ Express
 Body-parser
 Cors
 ## Instructions
-Make sure you install NodeJS , express , body-parser and cors
-Run `server.js` in Node server open terminal inside Weather-journal-app and run `node ./server.js` 
-The server runs on port 8000
-open `localhost:8000` in your browser and choose a country from select box and enter a zip code of city inside selected country
+Make sure you install NodeJS , express , body-parser and cors\
+if not install them -> open terminal and run these commands (make sure you install NodeJS and NPM firs)\
+`npm install express`\
+`npm install body-parser`\
+`npm install cors`\
+Run `server.js` in Node server open terminal inside Weather-journal-app and run `node ./server.js`\
+The server runs on port 8000\
+open `localhost:8000` in your browser and choose a country from select box and enter a zip code of city inside selected country\
 
 ## Extras
 
