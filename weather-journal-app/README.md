@@ -9,7 +9,7 @@ Body-parser
 Cors
 ## Instructions
 Make sure you install NodeJS , express , body-parser and cors\
-if not install them -> open terminal and run these commands (make sure you install NodeJS and NPM firs)\
+if not install them -> open terminal and run these commands (make sure you install NodeJS and NPM first)\
 `npm install express`\
 `npm install body-parser`\
 `npm install cors`\
