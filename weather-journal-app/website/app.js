@@ -1,18 +1,35 @@
+import { getCountriesDictionary} from "./countries.js";
+
 /* Global Variables */
 const apiKey = '198d1075835c46496833d18310304bbf';
-let country_code = 'us';
-let zip_code = '94040';
-const allPath = '/All';
-const URL = `api.openweathermap.org/data/2.5/weather?zip=${zip_code},${country_code}&appid=${apiKey}`;
 
+const getAllPath = '/All';
+const postPath = '/Post';
+const countries = getCountriesDictionary();
 const generate_btn = document.querySelector("#generate");
 const zip_textHolder = document.querySelector("#zip");
 const feelings_textHolder = document.querySelector("#feelings");
+const date_elem = document.querySelector("#date");
+const temp_elem = document.querySelector("#temp");
+const content_elem = document.querySelector("#content");
+const selector_elem = document.querySelector("#country_selector");
+const baseURL = `https://api.openweathermap.org/data/2.5/weather?units=metric&zip=`;
 // Create a new date instance dynamically with JS
 // NOTE : I incremented month by 1 to get a valid month like calender 
 let d = new Date();
 let newDate = (d.getMonth()+1)+'.'+ d.getDate()+'.'+ d.getFullYear();
 
+//A function construct Selector element for countries codes and countries name
+(function setOptionsOfCountry(){
+    selector_elem.style.display = "none";
+    Object.keys(countries).forEach(key => {
+        const option_elem = document.createElement("option");
+        option_elem.innerText = key;
+        option_elem.setAttribute("value",countries[key])
+        selector_elem.appendChild(option_elem);
+    });
+    selector_elem.style.display = 'block';
+})();
 // GET ROUTE request to server
 // The server should return the global object defined there 
 let getServerData = async() => {
@@ -30,18 +47,20 @@ let getServerData = async() => {
 GET ROUTE request to WorldWeatherMap
 Returns weather object data 
 */
-let getWeather = async (APIKey,zip_code) => {
-    const res = await fetch(setupWeatherURLRequest(country_code,zip_code)+APIKey)
+let getWeather = async (APIKey,country_code,zip_code) => {
+    const res = await fetch(setupWeatherURLRequest(country_code,zip_code,APIKey))
     try {
 
          let newData = await res.json();
-         newEntry = { 
+         console.log(newData);
+         const newEntry = { 
               temperature: newData.main.temp,
         }
         console.log(newEntry);
         return newEntry;
       }  catch(error) {
         console.log("error", error);
+        alert("Couldn't find data with specified zip code,\nmake sure you enter a valid zip code")
         
       }
 }
@@ -65,32 +84,27 @@ const postData = async ( url = '', data = {})=>{
         const server_response = await response.json();
         
         console.log(server_response);
-        return server_response;
+        return data;
       }catch(error) {
       console.log("error", error);
       }
   }
-getWeather(apiKey,zip_code);
 
 
 //Function returns valid HTTP link to OpenWeatherMap to get Data corresponding to city 
 //Defined by country ID (us,eg,...) and city zip code
-function setupWeatherURLRequest(country_code,zip_code){
-    return `http://api.openweathermap.org/data/2.5/weather?zip=${zip_code},${country_code}&appid=`
+function setupWeatherURLRequest(country_code,zip_code,APIKey){
+    return baseURL+zip_code+','+country_code+'&appid='+APIKey;
 }
 
 //Generate button listener to click event 
 generate_btn.addEventListener("click",generate_btn_callback)
 
 //Function call back when generate button is pressed/clicked
-function generate_btn_callback(){
-    const zipCode = zip_textHolder.value;
-    console.log("ZipCode = "+zipCode);
-    getWeather(apiKey,zipCode).then(data => appendUserDataAndDate(data)).then(data => updateUI(data))
-}
+
 
 //function to append meta data from client (Client feelings and current date)
-function appendUserDataAndDate(data = {}){
+async function appendUserDataAndDate(data = {}){
     data["date"]= newDate;
     data["user_response"] = feelings_textHolder.value;
     return data
@@ -98,5 +112,21 @@ function appendUserDataAndDate(data = {}){
 //Function to update UI with data 
 function updateUI(data){
     //TODO 
+ content_elem.innerHTML = `Your feeling : ${data.user_response}`;
+ date_elem.innerHTML = `Todat date : ${data.date}`;
+ temp_elem.innerHTML = `Temperature : ${data.temperature} C`;
  console.log(data);
 }
+function generate_btn_callback(){
+    const zipCode = zip_textHolder.value;
+    const country_code = selector_elem.value;
+    console.log("ZipCode = "+zipCode+", Country Code = "+country_code);
+
+    getWeather(apiKey,country_code,zipCode)
+        .then(data => appendUserDataAndDate(data))
+        .then(data => postData(postPath,data))
+        .then(data => updateUI(data))
+}
+selector_elem.value = 'US';
+zip_textHolder.value = 94040;
+feelings_textHolder.value = "dummy input";

@@ -5,8 +5,8 @@ body{
 
 #app{
     display: grid;
-    grid-auto-rows: minmax(150px, auto);
-    /* grid-template-columns:  */
+    grid-auto-rows: min-content;
+     grid-template-columns:  100%;
     height:100vh;
     background: #f23557;
     color: #f0d43a;
@@ -17,7 +17,7 @@ body{
 }
 
 .holder{
-
+    margin-left: 1em;
 }
 
 .entry{
@@ -25,9 +25,20 @@ body{
 }
 
 #entryHolder{
+ 
+
 
 }
-
+#data_holder{
+   /* position:absolute;*/
+    top:0;
+    right:0;
+    margin-right: 1em;
+    margin-top: 1em;
+   /* display: flex;*/
+    flex-direction: column ;
+    
+}
 #date{
 
 }
@@ -41,12 +52,19 @@ body{
 }
 
 .headline {
-
+    background-color: aqua;
+    size: initial;
 }
 .title{
 
 }
+#feelings{
 
+}
+#generate{
+    width: min-content;
+    height: min-content;
+}
 /*  Basic Styling To Override Default For Basic HTML Elements */
 label{
     display:block;
