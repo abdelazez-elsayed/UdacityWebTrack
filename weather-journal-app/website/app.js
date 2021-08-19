@@ -11,6 +11,7 @@ const zip_textHolder = document.querySelector("#zip");
 const feelings_textHolder = document.querySelector("#feelings");
 const date_elem = document.querySelector("#date");
 const temp_elem = document.querySelector("#temp");
+const zipHelp = document.querySelector("#zipHelp");
 const content_elem = document.querySelector("#content");
 const selector_elem = document.querySelector("#country_selector");
 const baseURL = `https://api.openweathermap.org/data/2.5/weather?units=metric&zip=`;
@@ -55,14 +56,25 @@ let getWeather = async (APIKey,country_code,zip_code) => {
          console.log(newData);
          const newEntry = { 
               temperature: newData.main.temp,
+              place : newData.name,
         }
         console.log(newEntry);
         return newEntry;
       }  catch(error) {
         console.log("error", error);
-        alert("Couldn't find data with specified zip code,\nmake sure you enter a valid zip code")
-        
+        return error;
       }
+}
+//function to append meta data from client (Client feelings and current date)
+async function appendUserDataAndDate(data = {}){
+    try{
+    data["date"]= newDate;
+    data["user_response"] = feelings_textHolder.value;
+    return data
+    }catch(err){
+        console.log("APPEND ERROR")
+        return err;
+    }
 }
 
 /*
@@ -87,6 +99,7 @@ const postData = async ( url = '', data = {})=>{
         return data;
       }catch(error) {
       console.log("error", error);
+      throw error;
       }
   }
 
@@ -97,27 +110,28 @@ function setupWeatherURLRequest(country_code,zip_code,APIKey){
     return baseURL+zip_code+','+country_code+'&appid='+APIKey;
 }
 
-//Generate button listener to click event 
-generate_btn.addEventListener("click",generate_btn_callback)
 
+
+
+//Function to update UI with data 
+async function updateUI(data){
+
+    if(data.temperature === undefined){
+        zipHelp.textContent="Couldn't find data with specified zip code,make sure you enter a valid zip code";
+
+    }else{
+    content_elem.innerHTML = `${data.user_response}`;
+    date_elem.innerHTML = ` ${data.date}`;
+    temp_elem.innerHTML = `${data.place} : ${data.temperature} C°`;
+    zipHelp.textContent = "";
+    console.log(data);
+    }
+    
+}
 //Function call back when generate button is pressed/clicked
 
-
-//function to append meta data from client (Client feelings and current date)
-async function appendUserDataAndDate(data = {}){
-    data["date"]= newDate;
-    data["user_response"] = feelings_textHolder.value;
-    return data
-}
-//Function to update UI with data 
-function updateUI(data){
-    //TODO 
- content_elem.innerHTML = `Your feeling : ${data.user_response}`;
- date_elem.innerHTML = `Todat date : ${data.date}`;
- temp_elem.innerHTML = `Temperature : ${data.temperature} C`;
- console.log(data);
-}
-function generate_btn_callback(){
+function generate_btn_callback(evt){
+    evt.preventDefault();
     const zipCode = zip_textHolder.value;
     const country_code = selector_elem.value;
     console.log("ZipCode = "+zipCode+", Country Code = "+country_code);
@@ -126,7 +140,13 @@ function generate_btn_callback(){
         .then(data => appendUserDataAndDate(data))
         .then(data => postData(postPath,data))
         .then(data => updateUI(data))
+        
 }
+
+//Generate button listener to click event 
+generate_btn.addEventListener("click",generate_btn_callback)
+
+
 selector_elem.value = 'US';
 zip_textHolder.value = 94040;
 feelings_textHolder.value = "dummy input";
