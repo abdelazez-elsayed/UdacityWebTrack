@@ -1,5 +1,6 @@
 # Landing Page Project
 A simple page with smoothing scrolling to sections by clicking on them , showing which section is active (in the view)
+You see it (here)[https://zezomido78.github.io/UdacityWebTrack/landing-page/index.html]
 ## Table of Contents
 
 * [Instructions](#instructions)
